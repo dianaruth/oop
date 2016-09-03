@@ -19,6 +19,8 @@ public class World
     // buffer space to make player appear to be moving smoothly
     private int bufferX;
     private int bufferY;
+    // array to store whether a tile can be traversed or not
+    private boolean[][] blocked;
     // constants describing the world
     private final int NUM_TILES_WIDTH = 13;
     private final int NUM_TILES_HEIGHT = 10;
@@ -37,6 +39,14 @@ public class World
         camera = new Camera(player, SCREEN_WIDTH, SCREEN_HEIGHT);
         bufferX = 0;
         bufferY = 0;
+        // use the map's tile properties to calculate whether or not the player is allowed on each tile
+        blocked = new boolean[map.getWidth()][map.getHeight()];
+        for (int i = 0; i < map.getWidth(); i++) {
+            for (int j = 0; j < map.getHeight(); j++) {
+                String prop = map.getTileProperty(map.getTileId(i, j, 0), "block", "0");
+                blocked[i][j] = prop.equals("1") ? true : false;
+            }
+        }
     }
 
     /** Update the game state for a frame.
@@ -45,10 +55,22 @@ public class World
      * @param delta Time passed since last frame (milliseconds).
      */
     public void update(double dir_x, double dir_y, int delta) throws SlickException {
-        bufferX = -(camera.getMinX() % TILE_SIZE);
-        bufferY = -(camera.getMinY() % TILE_SIZE);
+        int newX = player.getX() + (int)(dir_x * delta);
+        int newY = player.getY() + (int)(dir_y * delta);
+        // do not allow player to move onto the tile if it is blocked
+        // check individually for x and y coordinate to allow player to slide along blocked terrain
+        if (blocked[newX/TILE_SIZE][player.getY()/TILE_SIZE]) {
+            dir_x = 0;
+        }
+        if (blocked[player.getX()/TILE_SIZE][newY/TILE_SIZE]) {
+            dir_y = 0;
+        }
         player.update(dir_x, dir_y, delta, camera);
         camera.update();
+        // update buffer so that camera moves properly around the player
+        // rather than tile-to-tile
+        bufferX = -(camera.getMinX() % TILE_SIZE);
+        bufferY = -(camera.getMinY() % TILE_SIZE);
     }
 
     /** Render the entire screen, so it reflects the current game state.
