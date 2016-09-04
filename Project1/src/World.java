@@ -65,7 +65,7 @@ public class World
         if (blocked[player.getX()/TILE_SIZE][newY/TILE_SIZE]) {
             dir_y = 0;
         }
-        player.update(dir_x, dir_y, delta, camera);
+        player.update(dir_x, dir_y, delta);
         camera.update();
         // update buffer so that camera moves properly around the player
         // rather than tile-to-tile
@@ -80,6 +80,6 @@ public class World
     throws SlickException
     {
         map.render(bufferX, bufferY, camera.getMinX()/TILE_SIZE, camera.getMinY()/TILE_SIZE, NUM_TILES_WIDTH, NUM_TILES_HEIGHT);
-        player.render();
+        player.render(camera);
     }
 }
