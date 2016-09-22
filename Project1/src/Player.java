@@ -12,9 +12,9 @@ public class Player {
     private double x;
     private double y;
     // the image representing the player
-    Image picRight;
-    Image picLeft;
-    Image pic;
+    private Image picRight;
+    private Image picLeft;
+    private Image pic;
     // the player moves 0.25 pixels per millisecond
     private final double SPEED = 0.25;
 
