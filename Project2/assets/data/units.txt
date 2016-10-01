@@ -8,7 +8,7 @@ placements of each unit.
 
 There are two sections. The "general unit data" section contains a table with
 a row for each unit *type*. The "specific unit data" section contains a table
-with a row for each actual unit instance. For example, there are many Zombies
+with a row for each actual unit instance. For example,there are many Zombies
 in the game -- the general table has one row for "Zombie". The specific table
 has a row for each Zombie featured in the game.
 
@@ -39,13 +39,13 @@ Specific unit data
 
 This table shows the starting position of each unit in the game.
 
-General type    Start position (x, y) in pixels
+General type    Start position (x,y) in pixels
 -----------------------------------------------
-(Player)        756, 684
+Player          756,684
 
-Prince Aldric   467, 679
-Elvira          738, 549
-Garth           756, 870
+Prince Aldric   467,679
+Elvira          738,549
+Garth           756,870
 
 Giant Bat       1431,864
 Giant Bat       1154,1321

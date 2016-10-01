@@ -9,6 +9,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Font;
 
 /** Main class for the Role-Playing Game engine.
  * Handles initialisation, input and rendering.
@@ -23,6 +24,10 @@ public class RPG extends BasicGame
     public static final int SCREEN_HEIGHT = 600;
     /** The world of our game */
     private World world;
+    /** Height of the player's status panel */
+    public static final int panelheight = 70;
+    /** The font used for rendering text */
+    private static Font font;
 
     /** Create a new RPG object. */
     public RPG()
@@ -38,6 +43,7 @@ public class RPG extends BasicGame
     throws SlickException
     {
         world = new World();
+        font = FontLoader.loadFont("assets/DejaVuSans-Bold.ttf", 15);
     }
 
     /** Update the game state for a frame.
@@ -51,6 +57,10 @@ public class RPG extends BasicGame
         // Get data about the current input (keyboard state).
         Input input = gc.getInput();
 
+        // variables indicating whether or not the user has pressed the A or T key
+        boolean attack = false;
+        boolean interact = false;
+
         // Update the player's movement direction based on keyboard presses.
         int dir_x = 0;
         int dir_y = 0;
@@ -62,9 +72,15 @@ public class RPG extends BasicGame
             dir_x -= 1;
         if (input.isKeyDown(Input.KEY_RIGHT))
             dir_x += 1;
+        if (input.isKeyDown(Input.KEY_A)) {
+            attack = true;
+        }
+        if (input.isKeyDown(Input.KEY_T)) {
+            interact = true;
+        }
         
         // Let World.update decide what to do with this data.
-        world.update(dir_x, dir_y, delta);
+        world.update(dir_x, dir_y, attack, interact, delta);
     }
 
     /** Render the entire screen, so it reflects the current game state.
@@ -75,7 +91,16 @@ public class RPG extends BasicGame
     throws SlickException
     {
         // Let World.render handle the rendering.
+        g.setFont(font);
         world.render(g);
+    }
+
+    /** Returns the width (in pixels) of the given text
+     * @param text The text that the method should check the width of
+     * @return The pixel length of the text string
+     */
+    public static int getTextWidth(String text) {
+        return font.getWidth(text);
     }
 
     /** Start-up method. Creates the game and runs it.

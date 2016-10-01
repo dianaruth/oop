@@ -6,33 +6,18 @@
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import java.util.ArrayList;
 
 /** The character which the user plays as.
  */
-public class Player
-{
-    private Image img = null;
-    private Image img_flipped = null;
-
-    // In pixels
-    private double x, y;
-    private double width, height;
-    private boolean face_left = false;
+public class Player extends Unit {
 
     // Pixels per millisecond
     private static final double SPEED = 0.25;
-
-    /** The x coordinate of the player (pixels). */
-    public double getX()
-    {
-        return x;
-    }
-
-    /** The y coordinate of the player (pixels). */
-    public double getY()
-    {
-        return y;
-    }
+    // respawn position
+    private static final int PLAYER_RESPAWN_X = 738, PLAYER_RESPAWN_Y = 549;
+    // list of items in inventory
+    protected ArrayList<Item> inventory;
 
     /** Creates a new Player.
      * @param image_path Path of player's image file.
@@ -48,6 +33,12 @@ public class Player
         this.y = y;
         this.width = img.getWidth();
         this.height = img.getHeight();
+        this.face_left = false;
+        this.inventory = new ArrayList<Item>();
+        this.hp = 100;
+        this.max_hp = 100;
+        this.max_damage = 26;
+        this.cooldown = 600;
     }
 
     /** Move the player in a given direction.
@@ -86,15 +77,30 @@ public class Player
    
     }
 
-    /** Draw the player to the screen at the correct place.
-     * @param g The current Graphics context.
-     * @param cam_x Camera x position in pixels.
-     * @param cam_y Camera y position in pixels.
+    /** Draws the player on the screen based on its x and y coordinates.
+     *
      */
     public void render()
     {
         Image which_img;
         which_img = this.face_left ? this.img_flipped : this.img;
         which_img.drawCentered((int) x, (int) y);
+    }
+
+    /** Revives the player.
+     *  Resets the player's status, hp, damage, and position
+     */
+    public void revive () {
+        this.alive = true;
+        this.x = PLAYER_RESPAWN_X;
+        this.y = PLAYER_RESPAWN_Y;
+    }
+
+    /** Adds the item to the player's inventory
+     * @param item The item to be added to the player's inventory
+     */
+    public void addToInventory(Item item) {
+        if (!inventory.contains(item))
+            this.inventory.add(item);
     }
 }
