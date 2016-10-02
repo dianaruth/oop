@@ -44,12 +44,18 @@ public abstract class Unit extends WorldObject {
             Color RED_BACKGROUND = new Color(0.8f, 0.0f, 0.0f, 0.8f); // Transparent Red
 
             // variables for drawing
-            int barWidth = this.img.getWidth();
             int barHeight = 20;
             int textWidth = RPG.getTextWidth(this.name);
+            int barWidth;
+            if (textWidth > img.getWidth()) {
+                barWidth = textWidth + 4;
+            }
+            else {
+                barWidth = img.getWidth();
+            }
             int textIndent = (barWidth - textWidth) / 2;
             float percent = (float) hp / (float) max_hp;
-            float barX = (float)(x - (img.getWidth() / 2));
+            float barX = (float)(x - (barWidth / 2));
             float barY = (float)(y - (img.getHeight() / 2) - barHeight);
             float healthWidth = barWidth * percent;
             float textX = barX + textIndent;

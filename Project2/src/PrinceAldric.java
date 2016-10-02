@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 
 public class PrinceAldric extends Villager {
     public PrinceAldric (int initialX, int initialY) throws SlickException {
-        this.name = "Aldric";
+        this.name = "Prince Aldric";
         this.x = initialX;
         this.y = initialY;
         this.img = new Image("assets/units/prince.png");

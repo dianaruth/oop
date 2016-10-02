@@ -78,6 +78,10 @@ public class World
         villagers.add(new Garth(756,870));
         villagers.add(new PrinceAldric(467,679));
         villagers.add(new LadyElvira(738,549));
+
+        // add monsters
+        monsters = new ArrayList<Monster>();
+        monsters.add(new GiantBat(PLAYER_START_X, PLAYER_START_Y));
     }
 
     /** Update the game state for a frame.
@@ -102,6 +106,12 @@ public class World
         for (Villager v : villagers) {
             v.interact(player, interact);
             v.update(delta);
+        }
+
+        // check for interaction between the player and each monster and move monsters
+        for (Monster m : monsters) {
+            m.interact(player, attack);
+            m.move(this, player, delta);
         }
     }
 
@@ -134,6 +144,11 @@ public class World
         // render villagers
         for (Villager v : villagers) {
             v.render(g);
+        }
+
+        // render monsters
+        for (Monster m : monsters) {
+            m.render(g);
         }
 
         // render the player's status panel
