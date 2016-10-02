@@ -18,6 +18,8 @@ public abstract class Unit extends WorldObject {
     protected int cooldown_remaining;
     /** A boolean indicating whether or not the unit is alive */
     protected boolean alive;
+    /** The maximum distance between the unit and the player for interaction to be allowed */
+    protected final int INTERACTION_DISTANCE = 50;
 
     /**
      * Kills the unit, making the alive boolean variable set to false

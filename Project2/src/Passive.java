@@ -21,7 +21,7 @@ public abstract class Passive extends Monster{
     /** Changes direction if the wander timer is zero or less, and changes direction based on whether the monster
      * is still wandering or running away from the player
      * @param world  The world that the monster will move in
-     * @param player The player that the monster is attempting to attack if it is within range
+     * @param player The player that is attempting to attack the monster
      * @param delta  The amount of time that has passed (in milliseconds)
      */
     @Override
@@ -81,7 +81,9 @@ public abstract class Passive extends Monster{
     public void interact(Player player, boolean attemptingInteraction) {
         // first check if player is attempting interaction and is within 50 pixels of the monster
         double dist = Math.sqrt(Math.pow(this.x - player.x, 2) + Math.pow(this.y - player.y, 2));
-        if (attemptingInteraction && dist < 50) {
+
+        // only interact if user is attacking, player is within 50 pixels, and cooldown is zero
+        if (attemptingInteraction && dist < INTERACTION_DISTANCE && player.cooldown_remaining == 0) {
             Random r = new Random();
             int damage = r.nextInt(player.max_damage);
             if (damage >= this.hp) {

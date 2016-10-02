@@ -75,7 +75,14 @@ public class Player extends Unit {
                 && !world.terrainBlocks(this.x - width / 2, new_y + y_sign * height / 2)){
             this.y = new_y;
         }
-   
+
+        // update attack cooldown
+        if (this.cooldown_remaining - delta <= 0) {
+            this.cooldown_remaining = 0;
+        }
+        else {
+            this.cooldown_remaining -= delta;
+        }
     }
 
     /** Draws the player on the screen based on its x and y coordinates.
@@ -94,9 +101,14 @@ public class Player extends Unit {
      *  Resets the player's status, hp, damage, and position
      */
     public void revive () {
-        this.alive = true;
+        // reset location
         this.x = PLAYER_RESPAWN_X;
         this.y = PLAYER_RESPAWN_Y;
+        // reset stats
+        this.hp = 100;
+        this.max_hp = 100;
+        this.max_damage = 26;
+        this.cooldown = 600;
     }
 
     /** Adds the item to the player's inventory
