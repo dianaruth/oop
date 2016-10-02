@@ -10,7 +10,7 @@ public class SwordOfStrength extends Item {
         this.name = "Sword of Strength";
         this.x = x;
         this.y = y;
-        this.image = new Image("assets/items/sword.png");
+        this.img = new Image("assets/items/sword.png");
         this.damageBonus = 30;
     }
 }

@@ -16,14 +16,21 @@ import java.util.ArrayList;
  */
 public class World
 {
+    /** Starting coordinates of the player */
     private static final int PLAYER_START_X = 756, PLAYER_START_Y = 684;
-    
+    /** The player object */
     private Player player = null;
+    /** The tiled map object */
     private TiledMap map = null;
+    /** The camera object */
     private Camera camera = null;
+    /** The list of items in the world */
     private ArrayList<Item> items = null;
+    /** The list of villagers in the world */
     private ArrayList<Villager> villagers = null;
+    /** The list of monsters in the world */
     private ArrayList<Monster> monsters = null;
+    /** The panel that displays the player's stats */
     private Image panel;
 
     /** Map width, in pixels. */
@@ -229,7 +236,7 @@ public class World
                 + ((RPG.panelheight - 72) / 2);
         for (Item i : player.inventory)                // TODO
         {
-            i.image.drawCentered(inv_x, inv_y);
+            i.img.drawCentered(inv_x, inv_y);
             inv_x += 72;
         }
     }

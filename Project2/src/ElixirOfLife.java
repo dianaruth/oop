@@ -10,6 +10,6 @@ public class ElixirOfLife extends Item {
         this.name = "Elixir of Life";
         this.x = x;
         this.y = y;
-        this.image = new Image("assets/items/elixir.png");
+        this.img = new Image("assets/items/elixir.png");
     }
 }

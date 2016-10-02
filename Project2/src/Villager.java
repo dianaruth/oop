@@ -6,8 +6,11 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public abstract class Villager extends Unit implements Interactive {
+    /** The dialogue that should be displayed above the villager when the player interacts with the villager */
     protected String dialogue;
+    /** The amount of time that has passed since the dialogue started displaying */
     protected int dialogue_timer;
+    /** The amount of time that the dialogue should display for */
     protected final int DIALOGUE_LENGTH = 4000;
 
     /** Updates the dialogue timer
@@ -25,9 +28,10 @@ public abstract class Villager extends Unit implements Interactive {
     /** Renders the villager's image and their dialogue if the dialogue timer is greater than zero
      * @param g Graphics variable
      */
+    @Override
     public void render(Graphics g) {
         // first render image in correct location
-        super.render();
+        super.render(g);
 
         // render dialogue if timer is more than zero
         if (dialogue_timer > 0) {
@@ -37,7 +41,7 @@ public abstract class Villager extends Unit implements Interactive {
             int barWidth = RPG.getTextWidth(dialogue) + 4;
             int barHeight = 20;
             int x = (int)this.x - (barWidth / 2);
-            int y = (int)this.y - (this.img.getHeight() / 2) - barHeight;
+            int y = (int)this.y - (this.img.getHeight() / 2) - (barHeight * 2);
             g.setColor(BACKGROUND);
             g.fillRect(x, y, barWidth, barHeight);
             g.setColor(TEXT);

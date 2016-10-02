@@ -10,7 +10,7 @@ public class AmuletOfVitality extends Item {
         this.name = "Amulet of Vitality";
         this.x = x;
         this.y = y;
-        this.image = new Image("assets/items/amulet.png");
+        this.img = new Image("assets/items/amulet.png");
         this.healthBonus = 80;
     }
 }

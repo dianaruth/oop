@@ -7,12 +7,15 @@ import org.newdawn.slick.SlickException;
 
 public class LadyElvira extends Villager {
     public LadyElvira (int initialX, int initialY) throws SlickException {
+        this.name = "Elvira";
         this.x = initialX;
         this.y = initialY;
         this.img = new Image("assets/units/shaman.png");
-        this.hp = 1;
+        this.max_hp = 1;
+        this.hp = max_hp;
         this.max_damage = 0;
         this.cooldown = 0;
+        this.alive = true;
         this.dialogue_timer = 0;
     }
 

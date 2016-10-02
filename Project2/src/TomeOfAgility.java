@@ -11,7 +11,7 @@ public class TomeOfAgility extends Item {
         this.name = "Tome of Agility";
         this.x = x;
         this.y = y;
-        this.image = new Image("assets/items/tome.png");
+        this.img = new Image("assets/items/tome.png");
         this.cooldownBonus = -300;
     }
 }

@@ -7,12 +7,15 @@ import org.newdawn.slick.SlickException;
 
 public class Garth extends Villager {
     public Garth (int initialX, int initialY) throws SlickException {
+        this.name = "Garth";
         this.x = initialX;
         this.y = initialY;
         this.img = new Image("assets/units/peasant.png");
-        this.hp = 1;
+        this.max_hp = 1;
+        this.hp = max_hp;
         this.max_damage = 0;
         this.cooldown = 0;
+        this.alive = true;
         this.dialogue_timer = 0;
     }
 

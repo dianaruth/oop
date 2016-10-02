@@ -5,11 +5,13 @@
 import org.newdawn.slick.Image;
 
 public abstract class Item extends WorldObject implements Interactive {
-    protected String name;
-    protected Image image;
+    /** Boolean indicating whether the item is in the player's inventory */
     protected boolean inInventory;
+    /** The bonus that the item adds to the player's hp */
     protected int healthBonus = 0;
+    /** The bonus that the item adds to the player's max damage */
     protected int damageBonus = 0;
+    /** The bonus that the item subtracts from the player's cooldown */
     protected int cooldownBonus = 0;
 
     /** Adds the item to the player's inventory
@@ -28,7 +30,7 @@ public abstract class Item extends WorldObject implements Interactive {
      */
     public void render () {
         if (!inInventory)
-            image.drawCentered((float)this.x, (float)this.y);
+            img.drawCentered((float)this.x, (float)this.y);
     }
 
     /** Adds the item to the player's inventory if it is within 50 pixels of the player

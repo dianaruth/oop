@@ -7,12 +7,15 @@ import org.newdawn.slick.SlickException;
 
 public class PrinceAldric extends Villager {
     public PrinceAldric (int initialX, int initialY) throws SlickException {
+        this.name = "Aldric";
         this.x = initialX;
         this.y = initialY;
         this.img = new Image("assets/units/prince.png");
-        this.hp = 1;
+        this.max_hp = 1;
+        this.hp = max_hp;
         this.max_damage = 0;
         this.cooldown = 0;
+        this.alive = true;
         this.dialogue_timer = 0;
     }
 

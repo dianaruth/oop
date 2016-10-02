@@ -12,11 +12,11 @@ import java.util.ArrayList;
  */
 public class Player extends Unit {
 
-    // Pixels per millisecond
+    /** The speed of the player */
     private static final double SPEED = 0.25;
-    // respawn position
+    /** The initial position that the player should be moved to when they respawn */
     private static final int PLAYER_RESPAWN_X = 738, PLAYER_RESPAWN_Y = 549;
-    // list of items in inventory
+    /** List of items in the player's inventory */
     protected ArrayList<Item> inventory;
 
     /** Creates a new Player.
@@ -39,6 +39,7 @@ public class Player extends Unit {
         this.max_hp = 100;
         this.max_damage = 26;
         this.cooldown = 600;
+        this.alive = true;
     }
 
     /** Move the player in a given direction.
@@ -82,9 +83,11 @@ public class Player extends Unit {
      */
     public void render()
     {
-        Image which_img;
-        which_img = this.face_left ? this.img_flipped : this.img;
-        which_img.drawCentered((int) x, (int) y);
+        if (this.isAlive()) {
+            Image which_img;
+            which_img = this.face_left ? this.img_flipped : this.img;
+            which_img.drawCentered((int) x, (int) y);
+        }
     }
 
     /** Revives the player.
