@@ -22,7 +22,7 @@ public abstract class Unit extends WorldObject {
     protected final int INTERACTION_DISTANCE = 50;
 
     /**
-     * Kills the unit, making the alive boolean variable set to false
+     * Kills the unit, making the alive boolean variable set to false and resetting stats
      */
     public void kill () {
         this.alive = false;

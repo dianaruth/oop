@@ -4,7 +4,7 @@
 
 import java.util.Random;
 
-public abstract class Passive extends Monster{
+public abstract class Passive extends Monster {
     /** The speed of the monster */
     protected final double SPEED = 0.2;
     /** The amount of time that needs to pass before the monster can change directions */
@@ -39,12 +39,12 @@ public abstract class Passive extends Monster{
 
         // run away from player if monster has been attacked recently
         if (wander_timer > 0) {
-            double dist_x = Math.abs(player.x - this.x);
-            double dist_y = Math.abs(player.y = this.y);
-            double dist_total = Math.sqrt(Math.pow(this.x - player.x, 2) + Math.pow(this.y - player.y, 2));
-            double amount = Math.sqrt(Math.pow(current_x_dir * delta * SPEED, 2) + Math.pow(current_y_dir * delta * SPEED, 2));
-            newX = (dist_x / dist_total) * amount;
-            newY = (dist_y / dist_total) * amount;
+            double distX = -(player.x - this.x);
+            double distY = -(player.y - this.y);
+            double dist_total = Math.sqrt((distX * distX) + (distY * distY));
+            double amount = SPEED * delta;
+            newX = this.x + (distX / dist_total) * amount;
+            newY = this.y + (distY / dist_total) * amount;
         }
         // if not attacked recently, wander the world
         else {
@@ -93,6 +93,7 @@ public abstract class Passive extends Monster{
                 this.hp -= damage;
             }
             this.wander_timer = MAX_WANDER_TIME;
+            player.cooldown_remaining = player.cooldown;
         }
     }
 }

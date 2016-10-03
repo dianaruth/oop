@@ -81,7 +81,41 @@ public class World
 
         // add monsters
         monsters = new ArrayList<Monster>();
-        monsters.add(new GiantBat(PLAYER_START_X, PLAYER_START_Y));
+
+        // giant bats
+        monsters.add(new GiantBat(1431,864));
+        monsters.add(new GiantBat(1154,1321));
+        monsters.add(new GiantBat(807,2315));
+        monsters.add(new GiantBat(833,2657));
+        monsters.add(new GiantBat(1090,3200));
+        monsters.add(new GiantBat(676,3187));
+        monsters.add(new GiantBat(836,3966));
+        monsters.add(new GiantBat(653,4367));
+        monsters.add(new GiantBat(1343,2731));
+        monsters.add(new GiantBat(1835,3017));
+        monsters.add(new GiantBat(1657,3954));
+        monsters.add(new GiantBat(1054,5337));
+        monsters.add(new GiantBat(801,5921));
+        monsters.add(new GiantBat(560,6682));
+        monsters.add(new GiantBat(1275,5696));
+        monsters.add(new GiantBat(1671,5991));
+        monsters.add(new GiantBat(2248,6298));
+        monsters.add(new GiantBat(2952,6373));
+        monsters.add(new GiantBat(3864,6695));
+        monsters.add(new GiantBat(4554,6443));
+        monsters.add(new GiantBat(4683,6228));
+        monsters.add(new GiantBat(5312,6606));
+        monsters.add(new GiantBat(5484,5946));
+        monsters.add(new GiantBat(6371,5634));
+        monsters.add(new GiantBat(5473,3544));
+        monsters.add(new GiantBat(5944,3339));
+        monsters.add(new GiantBat(6301,3414));
+        monsters.add(new GiantBat(6388,1994));
+        monsters.add(new GiantBat(6410,1584));
+        monsters.add(new GiantBat(5314,274));
+
+        // zombies
+        monsters.add(new Zombie(PLAYER_START_X, PLAYER_START_Y));
     }
 
     /** Update the game state for a frame.
@@ -152,7 +186,7 @@ public class World
         }
 
         // render the player's status panel
-        //renderPanel(g);
+        renderPanel(g);
     }
 
     /** Determines whether a particular map coordinate blocks movement.

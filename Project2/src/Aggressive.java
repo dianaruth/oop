@@ -28,17 +28,18 @@ public abstract class Aggressive extends Monster {
 
         // calculate distances
         double newX, newY;
-        double dist_x = Math.abs(player.x - this.x);
-        double dist_y = Math.abs(player.y = this.y);
-        double dist_total = Math.sqrt(Math.pow(this.x - player.x, 2) + Math.pow(this.y - player.y, 2));
-        double amount = Math.sqrt(Math.pow(current_x_dir * delta * SPEED, 2) + Math.pow(current_y_dir * delta * SPEED, 2));
+        double distX = player.x - this.x;
+        double distY = player.y - this.y;
+        double dist_total = Math.sqrt((distX * distX) + (distY * distY));
+        double amount = SPEED * delta;
 
         // attack the player if the player is within 50 pixels of the monster and there is no cooldown remaining
-        if (dist_total <= INTERACTION_DISTANCE && cooldown_remaining == 0) {
+        // monster must be alive to attack
+        if (dist_total <= INTERACTION_DISTANCE && cooldown_remaining == 0 && this.isAlive()) {
             // attack the player
             Random r = new Random();
             int damage = r.nextInt(this.max_damage);
-            if (damage >= this.hp) {
+            if (damage >= player.hp) {
                 // player is dead, revive so it can start over
                 player.revive();
             }
@@ -50,8 +51,9 @@ public abstract class Aggressive extends Monster {
         }
         // move toward player if player is within 150 pixels of the monster
         else if (dist_total <= MAX_CHASE_DISTANCE) {
-            newX = (dist_x / dist_total) * amount;
-            newY = (dist_y / dist_total) * amount;
+            newX = this.x + (distX / dist_total) * amount;
+            newY = this.y + (distY / dist_total) * amount;
+
             // update position if not blocked
             if (!world.terrainBlocks(newX, newY)) {
                 x = newX;
@@ -79,6 +81,7 @@ public abstract class Aggressive extends Monster {
             else {
                 this.hp -= damage;
             }
+            player.cooldown_remaining = player.cooldown;
         }
     }
 }
