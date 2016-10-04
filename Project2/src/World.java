@@ -62,7 +62,7 @@ public class World
     throws SlickException
     {
         map = new TiledMap(RPG.ASSETS_PATH + "/map.tmx", RPG.ASSETS_PATH);
-        player = new Player(RPG.ASSETS_PATH + "/units/player.png", PLAYER_START_X, PLAYER_START_Y);
+        player = new Player(RPG.ASSETS_PATH + "/units/player.png", 1976, 402);//PLAYER_START_X, PLAYER_START_Y);
         camera = new Camera(player, RPG.SCREEN_WIDTH, RPG.SCREEN_HEIGHT);
         panel = new Image("assets/panel.png");
 
@@ -115,7 +115,109 @@ public class World
         monsters.add(new GiantBat(5314,274));
 
         // zombies
-        monsters.add(new Zombie(PLAYER_START_X, PLAYER_START_Y));
+        monsters.add(new Zombie(681,3201));
+        monsters.add(new Zombie(691,4360));
+        monsters.add(new Zombie(2166,2650));
+        monsters.add(new Zombie(2122,2725));
+        monsters.add(new Zombie(2284,2962));
+        monsters.add(new Zombie(2072,4515));
+        monsters.add(new Zombie(2006,4568));
+        monsters.add(new Zombie(2385,4629));
+        monsters.add(new Zombie(2446,4590));
+        monsters.add(new Zombie(2517,4532));
+        monsters.add(new Zombie(4157,6730));
+        monsters.add(new Zombie(4247,6620));
+        monsters.add(new Zombie(4137,6519));
+        monsters.add(new Zombie(4234,6449));
+        monsters.add(new Zombie(5879,4994));
+        monsters.add(new Zombie(5954,4928));
+        monsters.add(new Zombie(6016,4866));
+        monsters.add(new Zombie(5860,4277));
+        monsters.add(new Zombie(5772,4277));
+        monsters.add(new Zombie(5715,4277));
+        monsters.add(new Zombie(5653,4277));
+        monsters.add(new Zombie(5787,797));
+        monsters.add(new Zombie(5668,720));
+        monsters.add(new Zombie(5813,454));
+        monsters.add(new Zombie(5236,917));
+        monsters.add(new Zombie(5048,1062));
+        monsters.add(new Zombie(4845,996));
+        monsters.add(new Zombie(4496,575));
+        monsters.add(new Zombie(3457,273));
+        monsters.add(new Zombie(3506,779));
+        monsters.add(new Zombie(3624,1192));
+        monsters.add(new Zombie(2931,1396));
+        monsters.add(new Zombie(2715,1326));
+        monsters.add(new Zombie(2442,1374));
+        monsters.add(new Zombie(2579,1159));
+        monsters.add(new Zombie(2799,1269));
+        monsters.add(new Zombie(2768,739));
+        monsters.add(new Zombie(2099,956));
+
+        // bandits
+        monsters.add(new Bandit(1889,2581));
+        monsters.add(new Bandit(4502,6283));
+        monsters.add(new Bandit(5248,6581));
+        monsters.add(new Bandit(5345,6678));
+        monsters.add(new Bandit(5940,3412));
+        monsters.add(new Bandit(6335,3459));
+        monsters.add(new Bandit(6669,260));
+        monsters.add(new Bandit(6598,339));
+        monsters.add(new Bandit(6598,528));
+        monsters.add(new Bandit(6435,528));
+        monsters.add(new Bandit(6435,678));
+        monsters.add(new Bandit(5076,1082));
+        monsters.add(new Bandit(5191,1187));
+        monsters.add(new Bandit(4940,1175));
+        monsters.add(new Bandit(4760,1039));
+        monsters.add(new Bandit(4883,889));
+        monsters.add(new Bandit(4427,553));
+        monsters.add(new Bandit(3559,162));
+        monsters.add(new Bandit(3779,1553));
+        monsters.add(new Bandit(3573,1553));
+        monsters.add(new Bandit(3534,2464));
+        monsters.add(new Bandit(3635,2464));
+        monsters.add(new Bandit(3402,2861));
+        monsters.add(new Bandit(3151,2857));
+        monsters.add(new Bandit(3005,2997));
+        monsters.add(new Bandit(2763,2263));
+        monsters.add(new Bandit(2648,2263));
+        monsters.add(new Bandit(2621,1337));
+        monsters.add(new Bandit(2907,1270));
+        monsters.add(new Bandit(2331,598));
+        monsters.add(new Bandit(2987,394));
+        monsters.add(new Bandit(1979,394));
+        monsters.add(new Bandit(2045,693));
+        monsters.add(new Bandit(2069,1028));
+
+        // skeletons
+        monsters.add(new Skeleton(1255,2924));
+        monsters.add(new Skeleton(2545,4708));
+        monsters.add(new Skeleton(4189,6585));
+        monsters.add(new Skeleton(5720,622));
+        monsters.add(new Skeleton(5649,767));
+        monsters.add(new Skeleton(5291,312));
+        monsters.add(new Skeleton(5256,852));
+        monsters.add(new Skeleton(4790,976));
+        monsters.add(new Skeleton(4648,401));
+        monsters.add(new Skeleton(3628,1181));
+        monsters.add(new Skeleton(3771,1181));
+        monsters.add(new Skeleton(3182,2892));
+        monsters.add(new Skeleton(3116,3033));
+        monsters.add(new Skeleton(2803,2901));
+        monsters.add(new Skeleton(2850,2426));
+        monsters.add(new Skeleton(2005,1524));
+        monsters.add(new Skeleton(2132,1427));
+        monsters.add(new Skeleton(2242,1343));
+        monsters.add(new Skeleton(2428,771));
+        monsters.add(new Skeleton(2427,907));
+        monsters.add(new Skeleton(2770,613));
+        monsters.add(new Skeleton(2915,477));
+        monsters.add(new Skeleton(1970,553));
+        monsters.add(new Skeleton(2143,1048));
+
+        // Draelic
+        monsters.add(new Draelic(2069,510));
     }
 
     /** Update the game state for a frame.
@@ -231,20 +333,22 @@ public class World
         float health_percent;       // Player's health, as a percentage
 
         // Panel background image
-        panel.draw(0, RPG.SCREEN_HEIGHT - RPG.panelheight);
+        int panelX = camera.getMinX();
+        int panelY = camera.getMaxY() - RPG.panelheight;
+        panel.draw(panelX, panelY);
 
         // Display the player's health
-        text_x = 15;
-        text_y = RPG.SCREEN_HEIGHT - RPG.panelheight + 25;
+        text_x = panelX + 15;
+        text_y = panelY + 25;
         g.setColor(LABEL);
         g.drawString("Health:", text_x, text_y);
-        text = player.hp + "/" + player.max_hp;            // TODO: HP / Max-HP
+        text = player.hp + "/" + player.max_hp;
 
-        bar_x = 90;
-        bar_y = RPG.SCREEN_HEIGHT - RPG.panelheight + 20;
+        bar_x = panelX + 90;
+        bar_y = panelY + 20;
         bar_width = 90;
         bar_height = 30;
-        health_percent = (float)player.hp/(float)player.max_hp;      // TODO: HP / Max-HP
+        health_percent = (float)player.hp/(float)player.max_hp;
         hp_bar_width = (int) (bar_width * health_percent);
         text_x = bar_x + (bar_width - g.getFont().getWidth(text)) / 2;
         g.setColor(BAR_BG);
@@ -255,39 +359,37 @@ public class World
         g.drawString(text, text_x, text_y);
 
         // Display the player's damage and cooldown
-        text_x = 200;
+        text_x = panelX + 200;
         g.setColor(LABEL);
         g.drawString("Damage:", text_x, text_y);
         text_x += 80;
-        text = Integer.toString(player.max_damage);            // TODO: Damage
+        text = Integer.toString(player.max_damage);
         g.setColor(VALUE);
         g.drawString(text, text_x, text_y);
         text_x += 40;
         g.setColor(LABEL);
         g.drawString("Rate:", text_x, text_y);
         text_x += 55;
-        text = Integer.toString(player.cooldown);             // TODO: Cooldown
+        text = Integer.toString(player.cooldown);
         g.setColor(VALUE);
         g.drawString(text, text_x, text_y);
 
         // Display the player's inventory
         g.setColor(LABEL);
-        g.drawString("Items:", 420, text_y);
-        bar_x = 490;
-        bar_y = RPG.SCREEN_HEIGHT - RPG.panelheight + 10;
+        g.drawString("Items:", panelX + 420, text_y);
+        bar_x = panelX + 490;
+        bar_y = panelY + 10;
         bar_width = 288;
         bar_height = bar_height + 20;
         g.setColor(BAR_BG);
         g.fillRect(bar_x, bar_y, bar_width, bar_height);
 
-        inv_x = 490;
-        inv_y = RPG.SCREEN_HEIGHT - RPG.panelheight
-                + ((RPG.panelheight - 72) / 2);
-        for (Item i : player.inventory)                // TODO
+        inv_x = panelX + 490;
+        inv_y = panelY + ((RPG.panelheight - 72) / 2);
+        for (Item i : player.inventory)
         {
-            i.img.drawCentered(inv_x, inv_y);
+            i.img.draw(inv_x, inv_y);
             inv_x += 72;
         }
     }
-
 }

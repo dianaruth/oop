@@ -21,8 +21,14 @@ public abstract class Item extends WorldObject implements Interactive {
         player.addToInventory(this);
         this.inInventory = true;
         player.hp += healthBonus;
+        player.max_hp += healthBonus;
         player.cooldown += cooldownBonus;
         player.max_damage += damageBonus;
+
+        // reset bonuses
+        this.healthBonus = 0;
+        this.cooldownBonus = 0;
+        this.damageBonus = 0;
     }
 
     /**
