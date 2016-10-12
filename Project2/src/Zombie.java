@@ -7,14 +7,14 @@ import org.newdawn.slick.SlickException;
 
 public class Zombie extends Aggressive {
     public Zombie (int initialX, int initialY) throws SlickException {
-        this.name = "Zombie";
-        this.x = initialX;
-        this.y = initialY;
-        this.img = new Image("assets/units/zombie.png");
-        this.max_hp = 60;
-        this.hp = max_hp;
-        this.max_damage = 10;
-        this.cooldown = 800;
-        this.alive = true;
+        this.setName("Zombie");
+        this.setX(initialX);
+        this.setY(initialY);
+        this.setImg(new Image("assets/units/zombie.png"));
+        this.setMaxHp(60);
+        this.setHp(this.getMaxHp());
+        this.setMaxDamage(10);
+        this.setCooldown(800);
+        this.setAlive(true);
     }
 }

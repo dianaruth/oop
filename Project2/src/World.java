@@ -62,7 +62,7 @@ public class World
     throws SlickException
     {
         map = new TiledMap(RPG.ASSETS_PATH + "/map.tmx", RPG.ASSETS_PATH);
-        player = new Player(RPG.ASSETS_PATH + "/units/player.png", 1976, 402);//PLAYER_START_X, PLAYER_START_Y);
+        player = new Player(RPG.ASSETS_PATH + "/units/player.png", PLAYER_START_X, PLAYER_START_Y);
         camera = new Camera(player, RPG.SCREEN_WIDTH, RPG.SCREEN_HEIGHT);
         panel = new Image("assets/panel.png");
 
@@ -342,13 +342,13 @@ public class World
         text_y = panelY + 25;
         g.setColor(LABEL);
         g.drawString("Health:", text_x, text_y);
-        text = player.hp + "/" + player.max_hp;
+        text = player.getHp() + "/" + player.getMaxHp();
 
         bar_x = panelX + 90;
         bar_y = panelY + 20;
         bar_width = 90;
         bar_height = 30;
-        health_percent = (float)player.hp/(float)player.max_hp;
+        health_percent = (float)player.getHp()/(float)player.getMaxHp();
         hp_bar_width = (int) (bar_width * health_percent);
         text_x = bar_x + (bar_width - g.getFont().getWidth(text)) / 2;
         g.setColor(BAR_BG);
@@ -363,14 +363,14 @@ public class World
         g.setColor(LABEL);
         g.drawString("Damage:", text_x, text_y);
         text_x += 80;
-        text = Integer.toString(player.max_damage);
+        text = Integer.toString(player.getMaxDamage());
         g.setColor(VALUE);
         g.drawString(text, text_x, text_y);
         text_x += 40;
         g.setColor(LABEL);
         g.drawString("Rate:", text_x, text_y);
         text_x += 55;
-        text = Integer.toString(player.cooldown);
+        text = Integer.toString(player.getCooldown());
         g.setColor(VALUE);
         g.drawString(text, text_x, text_y);
 
@@ -386,9 +386,9 @@ public class World
 
         inv_x = panelX + 490;
         inv_y = panelY + ((RPG.panelheight - 72) / 2);
-        for (Item i : player.inventory)
+        for (Item i : player.getInventory())
         {
-            i.img.draw(inv_x, inv_y);
+            i.getImg().draw(inv_x, inv_y);
             inv_x += 72;
         }
     }

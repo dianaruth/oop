@@ -2,33 +2,32 @@
  * Created by dianaruth on 9/27/16.
  */
 
-import org.newdawn.slick.Image;
-
 public abstract class Item extends WorldObject implements Interactive {
     /** Boolean indicating whether the item is in the player's inventory */
     protected boolean inInventory;
-    /** The bonus that the item adds to the player's hp */
-    protected int healthBonus = 0;
-    /** The bonus that the item adds to the player's max damage */
-    protected int damageBonus = 0;
-    /** The bonus that the item subtracts from the player's cooldown */
-    protected int cooldownBonus = 0;
+    
+    /** Returns whether the item is in the player's inventory or not
+     * @return Whether or not the item is in the player's inventory
+     */
+    public boolean getInInventory() {
+        return inInventory;
+    }
+    
+    /** Sets whether the item is in the player's inventory or not
+     * @param newInInventory The object's new inInventory member
+     */
+    public void setInInventory(boolean newInInventory) {
+        this.inInventory = newInInventory;
+    }
 
     /** Adds the item to the player's inventory
      * @param player The player whose inventory the item should be added to
      */
     public void pickUp(Player player) {
-        player.addToInventory(this);
-        this.inInventory = true;
-        player.hp += healthBonus;
-        player.max_hp += healthBonus;
-        player.cooldown += cooldownBonus;
-        player.max_damage += damageBonus;
-
-        // reset bonuses
-        this.healthBonus = 0;
-        this.cooldownBonus = 0;
-        this.damageBonus = 0;
+    	if (!inInventory) {
+    		player.addToInventory(this);
+            this.setInInventory(true);
+    	}
     }
 
     /**
@@ -36,7 +35,7 @@ public abstract class Item extends WorldObject implements Interactive {
      */
     public void render () {
         if (!inInventory)
-            img.drawCentered((float)this.x, (float)this.y);
+            this.getImg().drawCentered((float)this.getX(), (float)this.getY());
     }
 
     /** Adds the item to the player's inventory if it is within 50 pixels of the player
@@ -45,7 +44,7 @@ public abstract class Item extends WorldObject implements Interactive {
      */
     public void interact (Player player, boolean attemptingInteraction) {
         // check to see if the player is within 50 pixels of the item
-        double dist = Math.sqrt(Math.pow(this.x - player.x, 2) + Math.pow(this.y - player.y, 2));
+        double dist = Math.sqrt(Math.pow(this.getX() - player.getX(), 2) + Math.pow(this.getY() - player.getY(), 2));
         if (attemptingInteraction && dist < 50) {
             this.pickUp(player);
         }

@@ -7,9 +7,9 @@ import org.newdawn.slick.SlickException;
 
 public class ElixirOfLife extends Item {
     public ElixirOfLife (int x, int y) throws SlickException {
-        this.name = "Elixir of Life";
-        this.x = x;
-        this.y = y;
-        this.img = new Image("assets/items/elixir.png");
+        this.setName("Elixir of Life");
+        this.setX(x);;
+        this.setY(y);
+        this.setImg(new Image("assets/items/elixir.png"));
     }
 }

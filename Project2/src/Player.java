@@ -17,7 +17,7 @@ public class Player extends Unit {
     /** The initial position that the player should be moved to when they respawn */
     private static final int PLAYER_RESPAWN_X = 738, PLAYER_RESPAWN_Y = 549;
     /** List of items in the player's inventory */
-    protected ArrayList<Item> inventory;
+    private ArrayList<Item> inventory;
 
     /** Creates a new Player.
      * @param image_path Path of player's image file.
@@ -27,19 +27,33 @@ public class Player extends Unit {
     public Player(String image_path, double x, double y)
         throws SlickException
     {
-        img = new Image(image_path);
-        img_flipped = img.getFlippedCopy(true, false);
-        this.x = x;
-        this.y = y;
-        this.width = img.getWidth();
-        this.height = img.getHeight();
-        this.face_left = false;
-        this.inventory = new ArrayList<Item>();
-        this.hp = 100;
-        this.max_hp = 100;
-        this.max_damage = 26;
-        this.cooldown = 600;
-        this.alive = true;
+        this.setImg(new Image(image_path));
+        this.setFlippedImg(this.getImg().getFlippedCopy(true, false));
+        this.setX(x);
+        this.setY(y);
+        this.setWidth(getImg().getWidth());
+        this.setHeight(getImg().getHeight());
+        this.setFaceLeft(false);
+        this.setInventory(new ArrayList<Item>());
+        this.setHp(100);
+        this.setMaxHp(100);
+        this.setMaxDamage(26);
+        this.setCooldown(600);
+        this.setAlive(true);
+    }
+    
+    /** Returns the player's inventory
+     * @return The player's inventory
+     */
+    public ArrayList<Item> getInventory() {
+        return inventory;
+    }
+    
+    /** Sets the player's inventory
+     * @param newInventory The player's new inventory
+     */
+    public void setInventory(ArrayList<Item> newInventory) {
+        this.inventory = newInventory;
     }
 
     /** Move the player in a given direction.
@@ -54,34 +68,34 @@ public class Player extends Unit {
     {
         // Update player facing based on X direction
         if (dir_x > 0)
-            this.face_left = false;
+            this.setFaceLeft(false);
         else if (dir_x < 0)
-            this.face_left = true;
+            this.setFaceLeft(true);
 
         // Move the player by dir_x, dir_y, as a multiple of delta * speed
-        double new_x = this.x + dir_x * delta * SPEED;
-        double new_y = this.y + dir_y * delta * SPEED;
+        double new_x = this.getX() + dir_x * delta * SPEED;
+        double new_y = this.getY() + dir_y * delta * SPEED;
 
         // Move in x first
         double x_sign = Math.signum(dir_x);
-        if(!world.terrainBlocks(new_x + x_sign * width / 2, this.y + height / 2) 
-                && !world.terrainBlocks(new_x + x_sign * width / 2, this.y - height / 2)) {
-            this.x = new_x;
+        if(!world.terrainBlocks(new_x + x_sign * getWidth() / 2, this.getY() + getHeight() / 2) 
+                && !world.terrainBlocks(new_x + x_sign * getWidth() / 2, this.getY() - getHeight() / 2)) {
+            this.setX(new_x);
         }
         
         // Then move in y
         double y_sign = Math.signum(dir_y);
-        if(!world.terrainBlocks(this.x + width / 2, new_y + y_sign * height / 2) 
-                && !world.terrainBlocks(this.x - width / 2, new_y + y_sign * height / 2)){
-            this.y = new_y;
+        if(!world.terrainBlocks(this.getX() + getWidth() / 2, new_y + y_sign * getHeight() / 2) 
+                && !world.terrainBlocks(this.getX() - getWidth() / 2, new_y + y_sign * getHeight() / 2)){
+            this.setY(new_y);
         }
 
         // update attack cooldown
-        if (this.cooldown_remaining - delta <= 0) {
-            this.cooldown_remaining = 0;
+        if (this.getCooldownRemaining() - delta <= 0) {
+            this.setCooldownRemaining(0);
         }
         else {
-            this.cooldown_remaining -= delta;
+            this.setCooldownRemaining((int)(this.getCooldownRemaining() - delta));
         }
     }
 
@@ -92,8 +106,8 @@ public class Player extends Unit {
     {
         if (this.isAlive()) {
             Image which_img;
-            which_img = this.face_left ? this.img_flipped : this.img;
-            which_img.drawCentered((int) x, (int) y);
+            which_img = this.getFaceLeft() ? this.getFlippedImg() : this.getImg();
+            which_img.drawCentered((int) this.getX(), (int) this.getY());
         }
     }
 
@@ -102,13 +116,13 @@ public class Player extends Unit {
      */
     public void revive () {
         // reset location
-        this.x = PLAYER_RESPAWN_X;
-        this.y = PLAYER_RESPAWN_Y;
+        this.setX(PLAYER_RESPAWN_X);
+        this.setY(PLAYER_RESPAWN_Y);
         // reset stats
-        this.hp = 100;
-        this.max_hp = 100;
-        this.max_damage = 26;
-        this.cooldown = 600;
+        this.setHp(100);
+        this.setMaxHp(100);
+        this.setMaxDamage(26);
+        this.setCooldown(600);
     }
 
     /** Adds the item to the player's inventory
@@ -116,6 +130,6 @@ public class Player extends Unit {
      */
     public void addToInventory(Item item) {
         if (!inventory.contains(item))
-            this.inventory.add(item);
+            this.getInventory().add(item);
     }
 }

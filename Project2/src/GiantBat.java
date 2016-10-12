@@ -7,18 +7,18 @@ import org.newdawn.slick.SlickException;
 
 public class GiantBat extends Passive {
     public GiantBat (int initialX, int initialY) throws SlickException{
-        this.name = "Giant Bat";
-        this.x = initialX;
-        this.y = initialY;
-        this.img = new Image("assets/units/dreadbat.png");
-        this.max_hp = 40;
-        this.hp = max_hp;
-        this.max_damage = 0;
-        this.cooldown = 0;
-        this.alive = true;
-        this.current_x_dir = 0;
-        this.current_y_dir = 0;
-        this.change_dir_timer = 0;
-        this.wander_timer = 0;
+        this.setName("Giant Bat");
+        this.setX(initialX);
+        this.setY(initialY);
+        this.setImg(new Image("assets/units/dreadbat.png"));
+        this.setMaxHp(40);
+        this.setHp(this.getMaxHp());
+        this.setMaxDamage(0);
+        this.setCooldown(0);
+        this.setAlive(true);
+        this.setCurrentXDir(0);
+        this.setCurrentYDir(0);
+        this.setChangeDirTimer(0);
+        this.setWanderTimer(0);
     }
 }

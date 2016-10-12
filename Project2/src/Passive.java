@@ -6,17 +6,45 @@ import java.util.Random;
 
 public abstract class Passive extends Monster {
     /** The speed of the monster */
-    protected final double SPEED = 0.2;
+    public final double SPEED = 0.2;
     /** The amount of time that needs to pass before the monster can change directions */
-    protected final int MAX_CHANGE_DIR_TIME = 3000;
+    public final int MAX_CHANGE_DIR_TIME = 3000;
     /** The amount of time that needs to pass before the monster feels safe and can resume roaming */
-    protected final int MAX_WANDER_TIME = 5000;
+    public final int MAX_WANDER_TIME = 5000;
     /** The amount of time that has passed since the last time the monster changed direction */
-    protected int change_dir_timer;
+    private int change_dir_timer;
     /** The amount of time that has passed since the monster was last attacked by the player */
-    protected int wander_timer;
+    private int wander_timer;
     /** Array of direction choices */
-    protected final int[] DIRECTIONS = {-1, 0, 1};
+    public final int[] DIRECTIONS = {-1, 0, 1};
+    
+    /** Returns how much time is left until the object should change direction
+     * @return How much time is left until the object should change direction
+     */
+    public int getChangeDirTimer() {
+        return change_dir_timer;
+    }
+    
+    /** Sets how much time is left until the object should change direction
+     * @param newChangeDirTimer The new amount of time until the object should change direction
+     */
+    public void setChangeDirTimer(int newChangeDirTimer) {
+        this.change_dir_timer = newChangeDirTimer;
+    }
+    
+    /** Returns how much time is left until the object should resume wandering
+     * @return How much time is left until the object should resume wandering
+     */
+    public int getWanderTimer() {
+        return wander_timer;
+    }
+    
+    /** Sets how much time is left until the object should resume wandering
+     * @param newWanderTimer The new amount of time until the object should resume wandering
+     */
+    public void setWanderTimer(int newWanderTimer) {
+        this.wander_timer = newWanderTimer;
+    }
 
     /** Changes direction if the wander timer is zero or less, and changes direction based on whether the monster
      * is still wandering or running away from the player
@@ -39,12 +67,12 @@ public abstract class Passive extends Monster {
 
         // run away from player if monster has been attacked recently
         if (wander_timer > 0) {
-            double distX = -(player.x - this.x);
-            double distY = -(player.y - this.y);
+            double distX = -(player.getX() - this.getX());
+            double distY = -(player.getY() - this.getY());
             double dist_total = Math.sqrt((distX * distX) + (distY * distY));
             double amount = SPEED * delta;
-            newX = this.x + (distX / dist_total) * amount;
-            newY = this.y + (distY / dist_total) * amount;
+            newX = this.getX() + (distX / dist_total) * amount;
+            newY = this.getY() + (distY / dist_total) * amount;
         }
         // if not attacked recently, wander the world
         else {
@@ -62,14 +90,14 @@ public abstract class Passive extends Monster {
                 change_dir_timer = change_dir_timer - (int)delta;
             }
             // update the monster's position
-            newX = x + (current_x_dir * delta * SPEED);
-            newY = y + (current_y_dir * delta * SPEED);
+            newX = this.getX() + (current_x_dir * delta * SPEED);
+            newY = this.getY() + (current_y_dir * delta * SPEED);
         }
 
         // update position if not blocked
         if (!world.terrainBlocks(newX, newY)) {
-            x = newX;
-            y = newY;
+            this.setX(newX);
+            this.setY(newY);
         }
     }
 
@@ -80,20 +108,20 @@ public abstract class Passive extends Monster {
     @Override
     public void interact(Player player, boolean attemptingInteraction) {
         // first check if player is attempting interaction and is within 50 pixels of the monster
-        double dist = Math.sqrt(Math.pow(this.x - player.x, 2) + Math.pow(this.y - player.y, 2));
+        double dist = Math.sqrt(Math.pow(this.getX() - player.getX(), 2) + Math.pow(this.getY() - player.getY(), 2));
 
         // only interact if user is attacking, player is within 50 pixels, and cooldown is zero
-        if (attemptingInteraction && dist < INTERACTION_DISTANCE && player.cooldown_remaining == 0) {
+        if (attemptingInteraction && dist < INTERACTION_DISTANCE && player.getCooldownRemaining() == 0) {
             Random r = new Random();
-            int damage = r.nextInt(player.max_damage);
-            if (damage >= this.hp) {
+            int damage = r.nextInt(player.getMaxDamage());
+            if (damage >= this.getHp()) {
                 this.kill();
             }
             else {
-                this.hp -= damage;
+                this.setHp(this.getHp() - damage);
             }
             this.wander_timer = MAX_WANDER_TIME;
-            player.cooldown_remaining = player.cooldown;
+            player.setCooldownRemaining(player.getCooldown());
         }
     }
 }

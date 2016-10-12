@@ -7,16 +7,16 @@ import org.newdawn.slick.SlickException;
 
 public class Garth extends Villager {
     public Garth (int initialX, int initialY) throws SlickException {
-        this.name = "Garth";
-        this.x = initialX;
-        this.y = initialY;
-        this.img = new Image("assets/units/peasant.png");
-        this.max_hp = 1;
-        this.hp = max_hp;
-        this.max_damage = 0;
-        this.cooldown = 0;
-        this.alive = true;
-        this.dialogue_timer = 0;
+        this.setName("Garth");
+        this.setX(initialX);
+        this.setY(initialY);
+        this.setImg(new Image("assets/units/peasant.png"));
+        this.setMaxHp(1);
+        this.setHp(this.getMaxHp());
+        this.setMaxDamage(0);
+        this.setCooldown(0);
+        this.setAlive(true);
+        this.setDialogueTimer(0);
     }
 
     /** Sets Garth's dialogue based on which items are in the player's inventory
@@ -25,34 +25,34 @@ public class Garth extends Villager {
      */
     public void interact(Player player, boolean attemptingInteraction) {
         // first check if player is attempting interaction and is within 50 pixels of Garth
-        double dist = Math.sqrt(Math.pow(this.x - player.x, 2) + Math.pow(this.y - player.y, 2));
-        if (attemptingInteraction && dist < 50 && dialogue_timer == 0) {
+        double dist = Math.sqrt(Math.pow(this.getX() - player.getX(), 2) + Math.pow(this.getY() - player.getY(), 2));
+        if (attemptingInteraction && dist < 50 && this.getDialogueTimer() == 0) {
             boolean tome = false;
             boolean amulet = false;
             boolean sword = false;
             // check to see which items the player has in inventory
-            for (Item i : player.inventory) {
-                if (i.name.equals("Tome of Agility"))
+            for (Item i : player.getInventory()) {
+                if (i.getName().equals("Tome of Agility"))
                     tome = true;
-                if (i.name.equals("Amulet of Vitality"))
+                if (i.getName().equals("Amulet of Vitality"))
                     amulet = true;
-                if (i.name.equals("Sword of Strength"))
+                if (i.getName().equals("Sword of Strength"))
                     sword = true;
             }
             // choose dialogue based on items in player's inventory
             if (!amulet) {
-                this.dialogue = "Find the Amulet of Vitality, across the river to the west.";
+                this.setDialogue("Find the Amulet of Vitality, across the river to the west.");
             }
             else if (!sword) {
-                this.dialogue = "Find the Sword of Strength - cross the bridge to the east, then head south.";
+                this.setDialogue("Find the Sword of Strength - cross the bridge to the east, then head south.");
             }
             else if (!tome) {
-                this.dialogue = "Find the Tome of Agility, in the Land of Shadows.";
+                this.setDialogue("Find the Tome of Agility, in the Land of Shadows.");
             }
             else {
-                this.dialogue = "You have found all the treasure I know of.";
+                this.setDialogue("You have found all the treasure I know of.");
             }
-            this.dialogue_timer = DIALOGUE_LENGTH;
+            this.setDialogueTimer(DIALOGUE_LENGTH);
         }
     }
 }

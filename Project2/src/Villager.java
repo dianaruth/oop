@@ -7,11 +7,39 @@ import org.newdawn.slick.Graphics;
 
 public abstract class Villager extends Unit implements Interactive {
     /** The dialogue that should be displayed above the villager when the player interacts with the villager */
-    protected String dialogue;
+    private String dialogue;
     /** The amount of time that has passed since the dialogue started displaying */
-    protected int dialogue_timer;
+    private int dialogue_timer;
     /** The amount of time that the dialogue should display for */
     protected final int DIALOGUE_LENGTH = 4000;
+    
+    /** Returns the villager's dialogue
+     * @return The villager's dialogue
+     */
+    public String getDialogue() {
+        return dialogue;
+    }
+    
+    /** Sets the villager's dialogue
+     * @param newDialogue The villager's new dialogue
+     */
+    public void setDialogue(String newDialogue) {
+        this.dialogue = newDialogue;
+    }
+    
+    /** Returns the amount of time left for the dialogue to display
+     * @return The villager's dialogue timer
+     */
+    public int getDialogueTimer() {
+        return dialogue_timer;
+    }
+    
+    /** Sets how much time the dialogue should display
+     * @param newDialogueTimer The villager's new dialogue timer
+     */
+    public void setDialogueTimer(int newDialogueTimer) {
+        this.dialogue_timer = newDialogueTimer;
+    }
 
     /** Updates the dialogue timer
      * @param delta The time (in milliseconds) that has passed
@@ -40,8 +68,8 @@ public abstract class Villager extends Unit implements Interactive {
 
             int barWidth = RPG.getTextWidth(dialogue) + 4;
             int barHeight = 20;
-            int x = (int)this.x - (barWidth / 2);
-            int y = (int)this.y - (this.img.getHeight() / 2) - (barHeight * 2);
+            int x = (int)this.getX() - (barWidth / 2);
+            int y = (int)this.getY() - (this.getImg().getHeight() / 2) - (barHeight * 2);
             g.setColor(BACKGROUND);
             g.fillRect(x, y, barWidth, barHeight);
             g.setColor(TEXT);
